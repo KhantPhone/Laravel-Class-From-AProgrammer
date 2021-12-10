@@ -19,7 +19,8 @@
             </div>           
             <div class="card-body border-bottom">
                 <h5 class="card-title">{{$post->name}}</h5>                
-                <p class="card-text">{{$post->description}}</p>               
+                <p class="card-text">{{$post->description}}</p>                
+                <p class="card-text font-italic">{{'category : ' . $post->categories->name}}</p>               
                 <div>
                     <a href="/posts">
                         <button class="btn btn-danger mt-2">Back</button>

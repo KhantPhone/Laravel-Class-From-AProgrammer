@@ -13,9 +13,12 @@
     
     @section('content')
     <div class="container">
-        <div>
+        <div class="d-flex mt-4">
             <a href="/posts/create">
-                <button class="btn btn-success d-block mx-auto mt-4">Create New Post</button>
+                <button class="btn btn-success mr-1">Create New Post</button>
+            </a>
+            <a href="/logout">
+                <button class="btn btn-danger">LogOut</button>
             </a>
         </div>
         <div class="card mt-4 ">

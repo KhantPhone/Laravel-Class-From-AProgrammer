@@ -32,14 +32,24 @@
                     @method('PUT')
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
-                        <input value = "{{ old ('name', $post->name)}}"type="text" class="form-control" name="name" placeholder="Enter Name" >
+                        <input value = "{{ old ('name', $post->name) }}"type="text" class="form-control" name="name" placeholder="Enter Name" >
                     </div>                
                     <div class="form-group mb-3">
                         <label for="Description">Description</label>
                         <textarea class="form-control" name="description" placeholder="Enter Description" >
                             {{ old('descripiton' , $post->description) }}
                         </textarea>
-                    </div>                     
+                    </div>
+                    <div class="mb-4">
+                        <label for="category">Category</label>
+                        <select name="category_id" id="" class="form-control"> 
+                            @foreach($categories as $cat)                         
+                           <option value=" {{ $cat->id }} " {{$cat->id == $post->category_id ? 'selected' : ''}}>
+                               {{ $cat->name }}
+                           </option> 
+                            @endforeach                         
+                        </select>
+                    </div>                       
                         <button type="submit" class="btn btn-info">Submit</button>
                         <a href="/posts" class="btn btn-danger">Back                       
                         </a>                               
@@ -47,7 +57,7 @@
             </div>
         </div>
     </div>
-    @endsection
+   
     
 </body>
 </html>

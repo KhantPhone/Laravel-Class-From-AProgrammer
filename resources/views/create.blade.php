@@ -38,7 +38,13 @@
                         <textarea  class="form-control" name="description" placeholder="Enter Description">
                         {{ old ('description') }}
                         </textarea>
-                    </div>                     
+                    </div>
+                    <div class="mb-4">
+                        <label for="category">Category</label>
+                            <option value="{{ old ('category_id',$cat->id) }}">{{$cat->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>                    
                         <button type="submit" class="btn btn-primary ">Submit</button>
                         <a href="/posts" class="btn btn-danger">Back                       
                         </a>                               
