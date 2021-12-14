@@ -12,15 +12,16 @@
     @extends('layout')
     
     @section('content')
-    <div class="container">
-        <div class="d-flex mt-4">
+    <div class="container">       
+        <div class="mt-4">
             <a href="/posts/create">
                 <button class="btn btn-success mr-1">Create New Post</button>
             </a>
             <a href="/logout">
                 <button class="btn btn-danger">LogOut</button>
             </a>
-        </div>
+            <h4 class="text-right">Name : <i class="text-warning">{{Auth::user()->name}}</i> </h4>         
+        </div>       
         <div class="card mt-4 ">
             <div class="card-header text-center">
                 Contents

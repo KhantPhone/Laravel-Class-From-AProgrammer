@@ -39,8 +39,10 @@
                         {{ old ('description') }}
                         </textarea>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4">                          
                         <label for="category">Category</label>
+                        <select name="category_id" id="" class="form-control">
+                        @foreach($categories as $cat)
                             <option value="{{ old ('category_id',$cat->id) }}">{{$cat->name}}</option>
                             @endforeach
                         </select>

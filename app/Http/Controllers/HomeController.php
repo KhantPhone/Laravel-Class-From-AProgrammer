@@ -19,7 +19,8 @@ class HomeController extends Controller
     public function index()
     {
         //$data = Post::all();
-        $data = Post::orderBy('id','desc')->get();
+        //similar to SELECT * FROM posts WHERE user_id = 1
+        $data = Post::where('user_id',auth()->id())->orderBy('id','desc')->get();
         return view('home',compact('data'));
     }
 
@@ -43,6 +44,8 @@ class HomeController extends Controller
     public function store(StorePostRequest $request)
     {
         // Retrieve the validated input data...
+      
+       
         $validated = $request->validated();       
         Post::create($validated);
 
@@ -68,8 +71,11 @@ class HomeController extends Controller
      */
     public function show(Post $post)
     {
-        //$post = Post::findorFail($id);BTS
-       
+        // //$post = Post::findorFail($id);BTS
+        // if($post->user_id != auth()->id()){
+        //     abort(403);
+        // }
+        $this->authorize('view',$post);
         return view('show',compact('post'));
     }
 
@@ -81,10 +87,12 @@ class HomeController extends Controller
      */
     public function edit(Post $post)
     {
+        // if($post->user_id != auth()->id()){
+        //     abort(403);
+        // }
+        $this->authorize('view',$post);
         //$post = Post::findorFail($id);
-        $categories = Category::all();
-       
-        
+        $categories = Category::all();        
         return view('edit',compact('post','categories'));    
     }
 
