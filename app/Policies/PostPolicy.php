@@ -30,7 +30,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        return $user->id === $post->user_id || $user->id = '1';
+        return $user->id === $post->user_id || $user->id = "1";
     }
 
     /**

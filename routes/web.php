@@ -1,5 +1,8 @@
 <?php
 
+use App\Test;
+use App\TestFacade;
+use App\Container;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
@@ -15,7 +18,18 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-//Route::get('/', [HomeController::class, 'testroot' ]) ->name('root);
+Route::get('/', function(){
+
+//    return TestFacade::execute();
+
+//    dd(resolve('test')->execute());
+
+      dd(app('test')->execute());
+
+
+  
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->resource('/posts',HomeController::class);
 
 Route::get('/logout',[AuthController::class,'logout']);

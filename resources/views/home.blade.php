@@ -21,11 +21,29 @@
                 <button class="btn btn-danger">LogOut</button>
             </a>
             <h4 class="text-right">Name : <i class="text-warning">{{Auth::user()->name}}</i> </h4>         
-        </div>       
-        <div class="card mt-4 ">
+        </div>
+        @if (session('createdstatus'))
+            <div class="alert alert-success alert-dismissible fade-in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success! </strong>{{ session('createdstatus') }}
+            </div>
+        @endif        
+        @if (session('updatedstatus'))
+            <div class="alert alert-warning alert-dismissible fade-in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success! </strong>{{ session('updatedstatus') }}
+            </div>
+        @endif          
+        @if (session('deletedstatus'))
+            <div class="alert alert-danger alert-dismissible fade-in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success! </strong>{{ session('deletedstatus') }}
+            </div>
+        @endif  
+        <div class="card mt-4">
             <div class="card-header text-center">
                 Contents
-            </div>
+            </div>          
             @foreach($data as $post)
             <div class="card-body border-bottom">
                 <h5 class="card-title">{{$post->name}}</h5>                

@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Mail\PostStored;
 use App\Models\Category;
+use App\Mail\PostCreated;
+use App\Mail\PostDeleted;
+use App\Mail\PostUpdated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use App\Http\Requests\StorePostRequest;
-
+use App\Http\Requests\StorePostRequest  ;
 
 class HomeController extends Controller
 {
@@ -16,11 +21,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Mail::raw('Hello World',function($msg){
+        //     $msg->to('khantphone333@gmail.com')->subject('Ap Index Function');
+        // });to send raw message
         //$data = Post::all();
         //similar to SELECT * FROM posts WHERE user_id = 1
         $data = Post::where('user_id',auth()->id())->orderBy('id','desc')->get();
+        // $request->session()->flash('status','Task Was Successful');
+        //dd(config('mail.from.address'));//accessing mail address from config
+        //dd(config('aprogrammer.info.first'));
         return view('home',compact('data'));
     }
 
@@ -47,7 +58,7 @@ class HomeController extends Controller
       
        
         $validated = $request->validated();       
-        Post::create($validated);
+        $post = Post::create($validated + ['user_id'=>Auth::user()->id]);
 
         // $post = new Post();
         // $post->name = $request->name;
@@ -60,7 +71,9 @@ class HomeController extends Controller
         //     'category_id' => $request->category,
         // ]);
 
-        return redirect('/posts');
+        //Mail::to('khantphone333@gmail.com')->send(new PostCreated());
+
+        return redirect('/posts')->with('createdstatus',config('aprogrammer.message.created'));
     }
 
     /**
@@ -92,7 +105,8 @@ class HomeController extends Controller
         // }
         $this->authorize('view',$post);
         //$post = Post::findorFail($id);
-        $categories = Category::all();        
+        $categories = Category::all();
+        
         return view('edit',compact('post','categories'));    
     }
 
@@ -118,7 +132,10 @@ class HomeController extends Controller
 
         $validated = $request->validated();       
         $post->update($validated);
-        return redirect('/posts');
+
+        //Mail::to('khantphone333@gmail.com')->send(new PostUpdated($post));
+
+        return redirect('/posts')->with('updatedstatus',config('aprogrammer.message.updated'));
 
     }
 
@@ -131,6 +148,9 @@ class HomeController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect('/posts');
+
+       
+
+        return redirect('/posts')->with('deletedstatus',config('aprogrammer.message.deleted'));
     }
 }
