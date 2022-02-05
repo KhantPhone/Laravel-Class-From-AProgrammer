@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Events\PostCreatedEvent;
 use App\Models\Post;
+use App\Models\User;
 use App\Mail\PostStored;
 use App\Models\Category;
 use App\Mail\PostCreated;
@@ -12,7 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use App\Http\Requests\StorePostRequest  ;
+use App\Http\Requests\StorePostRequest;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PostCreatedNotification;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,11 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+      
+        //$user = User::find(auth()->id());
+        //$user->notify(new PostCreatedNotification());
+        //Notification::send(User::find(auth()->id()), new PostCreatedNotification());//Using Facades
+        //echo "noti sent"; exit();
         // Mail::raw('Hello World',function($msg){
         //     $msg->to('khantphone333@gmail.com')->subject('Ap Index Function');
         // });to send raw message
@@ -59,7 +67,9 @@ class HomeController extends Controller
        
         $validated = $request->validated();       
         $post = Post::create($validated + ['user_id'=>Auth::user()->id]);
+        event(new PostCreatedEvent($post));
 
+      
         // $post = new Post();
         // $post->name = $request->name;
         // $post->description = $request->description;
@@ -72,8 +82,10 @@ class HomeController extends Controller
         // ]);
 
         //Mail::to('khantphone333@gmail.com')->send(new PostCreated());
+        
 
         return redirect('/posts')->with('createdstatus',config('aprogrammer.message.created'));
+     
     }
 
     /**

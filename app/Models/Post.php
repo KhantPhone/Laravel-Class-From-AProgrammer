@@ -21,20 +21,20 @@ class Post extends Model
         return $this->belongsTo('App\Models\category','category_id');
     }
 
-    protected static function booted()
-    {
-        static::created(function ($post) {
-            Mail::to('khantphone333@gmail.com')->send(new PostCreated($post));
+    // protected static function booted()
+    // {
+    //     static::created(function ($post) {
+    //         Mail::to('khantphone333@gmail.com')->send(new PostCreated($post));
             
-        });
-        static::updated(function ($post) {
-            Mail::to('khantphone333@gmail.com')->send(new PostUpdated($post));
+    //     });
+    //     static::updated(function ($post) {
+    //         Mail::to('khantphone333@gmail.com')->send(new PostUpdated($post));
             
-        });
-        static::deleted(function ($post) {
-            Mail::to('khantphone333@gmail.com')->send(new PostDeleted($post));
+    //     });
+    //     static::deleted(function ($post) {
+    //         Mail::to('khantphone333@gmail.com')->send(new PostDeleted($post));
             
-        });
-    }
+    //     });
+    // }
     
 };

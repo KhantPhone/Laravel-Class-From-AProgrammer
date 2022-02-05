@@ -24,7 +24,10 @@ Route::get('/', function(){
 
 //    dd(resolve('test')->execute());
 
-      dd(app('test')->execute());
+//    dd(app('test')->execute());
+
+      return view('welcome');
+
 
 
   
